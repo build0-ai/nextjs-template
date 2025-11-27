@@ -16,38 +16,50 @@ This is a Next.js 15 application using the App Router architecture with TypeScri
 
 ### Project Structure
 
-- **API Routes**: Located in `src/app/api/`
-- **Pages**: App Router pages in `src/app/`
-- **Shared Libraries**: Common utilities in `src/lib/`
-- **Styling**: Global CSS in `src/app/globals.css`, Tailwind configured via PostCSS
-
-### Cron jobs
-
-Cron jobs are run on Vercel and can be configured via `vercel.json`.  For example:
+**IMPORTANT**: Keep this structure documentation updated as the project evolves.
 
 ```
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "crons": [
-    {
-      "path": "/api/hello",
-      "schedule": "0 5 * * *"
-    }
-  ]
-}
+src/
+├── app/                           # Next.js App Router
+│   ├── api/                      # API routes
+│   ├── components/               # React components
+│   │   └── ui/                   # shadcn/ui components
+│   ├── globals.css               # Global CSS styles
+│   ├── layout.tsx                # Root layout component
+├── lib/                          # Shared utilities
+│   ├── database.ts               # Prisma database utilities (optional)
+│   └── utils.ts                  # General utility functions
+└── types/                        # TypeScript definitions
+    └── api.ts                    # API request/response types with Zod schemas
+
+prisma/                           # Database schema (optional)
+└── schema.prisma                 # Prisma database schema definitions
+
+Configuration Files:
+├── next.config.js                # Next.js configuration
+├── tailwind.config.js            # Tailwind CSS configuration
+├── tsconfig.json                 # TypeScript configuration
+├── package.json                  # Dependencies and scripts
+└── vercel.json                   # Vercel deployment configuration
 ```
 
-The crons property is an array of cron jobs. Each cron job has two properties:
-* The path, which must start with /
-* The schedule property, which must be a string that represents a cron expression. In this example, the job is scheduled to execute every day at 5:00 am UTC
+**Key Files:**
+- `src/types/api.ts` - All API types and Zod validation schemas
+- `src/lib/database.ts` - Database connection utilities (when needed)
+- `src/app/api/` - All API endpoints following Next.js App Router conventions
+- `prisma/schema.prisma` - Database schema definitions (when database is needed)
+- `CLAUDE.md` - Project documentation and conventions (this file)
 
 
 ## Code Conventions
 
 - **API Route Documentation**: Add JSDoc comments to all API route handlers explaining purpose, parameters, and return values
-- **Schema Validation**: Use Zod schemas for validating request bodies, query parameters, and URL parameters in API routes
+- **API Types & Validation**: Define all API request/response types and Zod schemas in `src/types/api.ts` to ensure type safety and validation between frontend and backend communication
+- **Authentication**: By default, use Build0's built-in authentication via `@build0.ai/core`. Call `authenticate(req)` to get the authenticated user. If the app needs independent authentication, it can implement its own system alongside Build0's authentication.
+- **Database (Optional)**: When database functionality is needed, use Prisma ORM with runtime database configuration. Database connection info is provided at request time, not through environment variables. Use `src/lib/database.ts` utilities to create Prisma clients with dynamic connection strings.  
+For example: `const prisma = createPrismaClient({ url: "postgresql://user:pass@host:5432/db" });`
 - **Component Documentation**: Document complex components and their props
-- **UI Components**: Use shadcn/ui for frontend components when building user interfaces.  They are found in `src/app/components/ui`.
+- **UI Components**: Avoid building new UI components if shadcn/ui can be used.  They are found in `src/app/components/ui`.
 
 ## HISTORY
 

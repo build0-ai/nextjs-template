@@ -1,7 +1,7 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
-import build0Rules from "@build0.ai/eslint-rules";
+import { eslintRules } from "@build0.ai/core";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,7 +19,7 @@ const eslintConfig = [
       // Custom rule to prevent empty string values in SelectItem
       "build0/no-empty-select-item-value": "error",
     },
-    plugins: { build0: build0Rules },
+    plugins: { build0: eslintRules },
   },
 ];
 

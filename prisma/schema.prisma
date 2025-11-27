@@ -1,0 +1,10 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Can be changed to "mysql", "sqlite", etc.
+  url      = env("DATABASE_URL")
+}
+
+// Add models below as needed.

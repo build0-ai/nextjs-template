@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import ErrorPropagation from "@build0.ai/error-propagation";
 import "./globals.css";
+import { Build0Wrapper } from "@build0.ai/core/client";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${jbmono.variable} antialiased`}>
-        <ErrorPropagation>{children}</ErrorPropagation>
+        <Build0Wrapper>{children}</Build0Wrapper>
       </body>
     </html>
   );
